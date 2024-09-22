@@ -1,9 +1,8 @@
 const express = require('express');
-const mongoose = require('mongoose'); // Importa mongoose
+const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 require('dotenv').config();
 const cors = require('cors');
-
 
 const app = express();
 const PORT = process.env.PORT || 4002;
@@ -12,6 +11,7 @@ app.use(express.json({ limit: '50mb' }));
 
 const uri = process.env.DB_URI;
 
+// Conectar a 
 async function connectToMongoDB() {
   try {
     await mongoose.connect(uri, {
@@ -33,8 +33,23 @@ async function connectToMongoDB() {
   }
 }
 
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://tu-dominio-en-produccion.com'
+];
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  }
+};
+
+// Aplicar middleware de CORS
+app.use(cors(corsOptions));
 
 connectToMongoDB();
 
@@ -43,4 +58,3 @@ app.use('/api', userRoutes);
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor en funcionamiento en el puerto ${PORT}`);
 });
-
