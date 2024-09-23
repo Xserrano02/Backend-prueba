@@ -32,20 +32,19 @@ async function connectToMongoDB() {
   }
 }
 
-// Permitir todas las conexiones con CORS
 const corsOptions = {
-  origin: '*', // Permitir todos los orígenes
+  origin: '*',
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'x-api-key'],
-  credentials: false // Si no necesitas compartir cookies o autorizaciones entre dominios
+  allowedHeaders: ['Content-Type', 'x-api-key', 'Authorization'],
+  credentials: false 
 };
 
 app.use(cors(corsOptions));
 
-// Conectar a MongoDB
+app.options('*', cors(corsOptions));
+
 connectToMongoDB();
 
-// Aplicar las rutas de la API
 app.use('/api', userRoutes);
 
 // Iniciar el servidor
