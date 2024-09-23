@@ -14,7 +14,7 @@
   ],
   "functions": {
     "api/users": {
-      "maxDuration": 60
+      "maxDuration": 30
     }
   }
 }
