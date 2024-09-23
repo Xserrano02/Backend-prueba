@@ -44,11 +44,15 @@ const corsOptions = {
     } else {
       callback(new Error('No permitido por CORS'));
     }
-  }
+  },
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true 
 };
 
-// Aplicar middleware de CORS
 app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
 
 connectToMongoDB();
 
