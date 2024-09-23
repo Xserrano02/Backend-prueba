@@ -11,7 +11,6 @@ app.use(express.json({ limit: '50mb' }));
 
 const uri = process.env.DB_URI;
 
-// Conectar a 
 async function connectToMongoDB() {
   try {
     await mongoose.connect(uri, {
@@ -35,7 +34,7 @@ async function connectToMongoDB() {
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://tu-dominio-en-produccion.com'
+  'https://frontend-prueba-jade.vercel.app'
 ];
 
 const corsOptions = {
